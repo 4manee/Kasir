@@ -1,0 +1,59 @@
+CREATE DATABASE kasir;
+USE kasir;
+
+CREATE TABLE admin (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nama_admin VARCHAR(250) NOT NULL,
+  password VARCHAR(250) NOT NULL,
+  username VARCHAR(250) NOT NULL
+);
+
+CREATE TABLE kategori (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nama_kategori VARCHAR(250) NOT NULL
+);
+
+CREATE TABLE pelanggan (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nama_pelanggan VARCHAR(250) NOT NULL,
+  alamat VARCHAR(250) NOT NULL,
+  nomor INT NOT NULL
+);
+
+CREATE TABLE produk (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_kategori INT NOT NULL,
+  nama_produk VARCHAR(255) NOT NULL,
+  unique_id VARCHAR(50) UNIQUE,
+  harga INT NOT NULL,
+  stok INT NOT NULL,
+  status TINYINT(1) DEFAULT 1,
+
+  FOREIGN KEY (id_kategori) REFERENCES kategori(id)
+);
+
+CREATE TABLE transaksi (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nama_pelanggan VARCHAR(100),
+  no_hp VARCHAR(20),
+  alamat TEXT,
+  tanggal DATETIME DEFAULT CURRENT_TIMESTAMP,
+  total INT NOT NULL,
+  bayar INT,
+  kembalian INT NOT NULL
+);
+
+CREATE TABLE transaksi_detail (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_transaksi INT NOT NULL,
+  id_produk INT NOT NULL,
+  jumlah INT NOT NULL,
+  harga INT NOT NULL,
+  subtotal INT NOT NULL,
+
+  FOREIGN KEY (id_transaksi) REFERENCES transaksi(id),
+  FOREIGN KEY (id_produk) REFERENCES produk(id)
+);
+
+npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --watch (kalau ada node js)
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> (kalau enggak ada)
